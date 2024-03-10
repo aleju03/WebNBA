@@ -10,7 +10,7 @@ import GamesList from './components/games/GamesList';
 import SearchInput from './components/games/SearchInput';
 
 const headers = {
-  'x-rapidapi-key': '11ebc35c27d9972837eff0aea0cfb35b', // Replace with your actual API key 💀
+  'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
   'x-rapidapi-host': 'v1.basketball.api-sports.io',
 };
 const API_URL = 'https://v1.basketball.api-sports.io/games?league=12&season=2023-2024';
