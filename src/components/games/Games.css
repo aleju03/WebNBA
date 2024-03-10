@@ -1,0 +1,60 @@
+/* Games.css */
+
+/* Styles for SearchInput component */
+.search-input {
+    margin-bottom: 20px;
+  }
+  
+  .search-input label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .search-input input {
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  .search-input button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Styles for GamesList component */
+  .games-list {
+    margin-bottom: 20px;
+  }
+  
+  .games-list h2 {
+    margin-bottom: 10px;
+  }
+  
+  .games-list select {
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  /* Styles for GameDetails component */
+  .game-details {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+  }
+  
+  .game-details h2 {
+    margin-bottom: 10px;
+  }
+  
+  .game-details p {
+    margin-bottom: 5px;
+  }
+  
+  /* Styles for error message */
+  .error {
+    color: red;
+    margin-bottom: 10px;
+  }
