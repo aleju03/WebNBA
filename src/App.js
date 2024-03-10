@@ -6,6 +6,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import GameDetails from './components/games/GameDetails';
+import GamesContainer from './components/games/GamesContainer';
 import GamesList from './components/games/GamesList';
 import SearchInput from './components/games/SearchInput';
 
@@ -86,13 +87,13 @@ const App = () => {
             <Routes>
               <Route path="/players" element={<h1>Players</h1>} />
               <Route path="/games" element={
-                <div className="games-container">
+                <GamesContainer>
                   <h1>NBA Games Search</h1>
                   <SearchInput date={date} onDateChange={setDate} onSearch={handleSearch} />
                   {error && <p className="error">{error}</p>}
                   {games.length > 0 && <GamesList games={games} onGameSelect={handleGameSelect} />}
                   {selectedGame && <GameDetails game={selectedGame} />}
-                </div>
+                </GamesContainer>
               } />
               <Route path="/teams" element={<h1>Teams</h1>} />
               <Route path="/leaderboard" element={<h1>Leaderboard</h1>} />
