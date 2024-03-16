@@ -10,8 +10,9 @@ const LoginPage = ({ onLogin }) => {
           <h1>NBApp</h1>
         </div>
         <div className="player-image-container">
-          <img src="/player.png" alt="Basketball Player" className="player-image" />
-        </div>
+          <img src="/player.png" alt="Player" className="player-image" />
+          <div className="player-image-placeholder"></div>
+      </div>
         <h2>Welcome to NBApp</h2>
         <p>Sign in with your Google account to access the app.</p>
         <button onClick={() => onLogin()} className="login-button">

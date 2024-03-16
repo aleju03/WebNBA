@@ -1,3 +1,5 @@
+// App.js
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
@@ -5,10 +7,8 @@ import axios from 'axios';
 import './App.css';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
-import GameDetails from './components/games/GameDetails';
-import GamesContainer from './components/games/GamesContainer';
-import GamesList from './components/games/GamesList';
-import SearchInput from './components/games/SearchInput';
+import Games from './components/games/Games';
+import Players from './components/players/Players';
 
 const headers = {
   'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
@@ -19,10 +19,6 @@ const API_URL = 'https://v1.basketball.api-sports.io/games?league=12&season=2023
 const App = () => {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
-  const [date, setDate] = useState('');
-  const [games, setGames] = useState([]);
-  const [selectedGame, setSelectedGame] = useState(null);
-  const [error, setError] = useState(null);
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
@@ -50,34 +46,6 @@ const App = () => {
     setProfile(null);
   };
 
-  const handleSearch = async () => {
-    setError(null); // Clear any previous error
-
-    if (!date) {
-      setError('Please enter a valid date.');
-      return;
-    }
-
-    // Calculate date with one day added
-    const newDate = new Date(date);
-    newDate.setDate(newDate.getDate() + 1);
-
-    const fullUrl = `${API_URL}&date=${newDate.toISOString().slice(0, 10)}`; // Use ISO 8601 format for consistent date representation
-
-    try {
-      const response = await axios.get(fullUrl, { headers });
-      const data = response.data;
-      setGames(data.response);
-    } catch (error) {
-      console.error(error);
-      setError('An error occurred while fetching data. Please try again later.');
-    }
-  };
-
-  const handleGameSelect = (game) => {
-    setSelectedGame(game);
-  };
-
   return (
     <Router>
       <div className="app">
@@ -85,16 +53,8 @@ const App = () => {
           <>
             <Navbar user={profile} onLogout={logOut} />
             <Routes>
-              <Route path="/players" element={<h1>Players</h1>} />
-              <Route path="/games" element={
-                <GamesContainer>
-                  <h1>NBA Games Search</h1>
-                  <SearchInput date={date} onDateChange={setDate} onSearch={handleSearch} />
-                  {error && <p className="error">{error}</p>}
-                  {games.length > 0 && <GamesList games={games} onGameSelect={handleGameSelect} />}
-                  {selectedGame && <GameDetails game={selectedGame} />}
-                </GamesContainer>
-              } />
+              <Route path="/players" element={<Players />} />
+              <Route path="/games" element={<Games API_URL={API_URL} headers={headers} />} />
               <Route path="/teams" element={<h1>Teams</h1>} />
               <Route path="/leaderboard" element={<h1>Leaderboard</h1>} />
             </Routes>
