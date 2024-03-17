@@ -1,5 +1,5 @@
 // App.js
-
+import MainPage from './components/MainPage';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
@@ -9,6 +9,8 @@ import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import Games from './components/games/Games';
 import Players from './components/players/Players';
+import Last10Games from './components/players/Last10Games';
+import CurrentSeasonStats from './components/players/CurrentSeasonStats';
 
 const headers = {
   'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
@@ -53,7 +55,10 @@ const App = () => {
           <>
             <Navbar user={profile} onLogout={logOut} />
             <Routes>
+              <Route path="/" element={<MainPage />} />
               <Route path="/players" element={<Players />} />
+              <Route path="/players/:playerId/last-10-games" element={<Last10Games />} />
+              <Route path="/players/:playerId/current-season-stats" element={<CurrentSeasonStats />} />
               <Route path="/games" element={<Games API_URL={API_URL} headers={headers} />} />
               <Route path="/teams" element={<h1>Teams</h1>} />
               <Route path="/leaderboard" element={<h1>Leaderboard</h1>} />

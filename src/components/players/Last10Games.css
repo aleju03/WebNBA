@@ -1,0 +1,48 @@
+.last-10-games-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .game-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+  }
+  
+  .game-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .game-card.clickable {
+    cursor: pointer;
+  }
+  
+  .team-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .team-logos img {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+  }
+  
+  .game-result {
+    font-weight: bold;
+  }
+  
+  .game-result.win {
+    color: green;
+  }
+  
+  .game-result.loss {
+    color: red;
+  }

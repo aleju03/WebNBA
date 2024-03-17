@@ -1,0 +1,67 @@
+/* CurrentSeasonStats.css */
+
+.current-season-stats-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.current-season-stats-container img {
+  width: 100px;
+  height: 100px;
+}
+
+.player-name {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.team-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.team-info p {
+  font-size: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-item {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stat-value {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+  margin-top: 20px;
+}

@@ -1,38 +1,48 @@
-// PlayerDetails.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './PlayerDetails.css';
+import { useNavigate } from 'react-router-dom';
 
 const PlayerDetails = ({ player, onClose }) => {
   const [playerDetails, setPlayerDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPlayerDetails = async () => {
       try {
         const cachedPlayer = localStorage.getItem(`player_${player.Name}`);
-
+  
         if (cachedPlayer) {
           setPlayerDetails(JSON.parse(cachedPlayer));
           setIsLoading(false);
         } else {
-          const response = await axios.get(`https://v2.nba.api-sports.io/players?search=${player.lastname}`, {
+          const apiUrl = `https://v2.nba.api-sports.io/players?search=${player.lastname}`;
+          console.log('API URL:', apiUrl);
+  
+          const response = await axios.get(apiUrl, {
             headers: {
               'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
               'x-rapidapi-host': 'v2.nba.api-sports.io',
             },
           });
-
+  
+          console.log('API Response:', response.data);
+  
           const playerData = response.data.response.find(
-            (p) => p.firstname === player.Name.split(' ')[0] && p.lastname === player.lastname
+            (p) => {
+              const csvNameParts = player.Name.split(' ');
+              const csvFirstName = csvNameParts[0];
+              const csvLastName = csvNameParts.slice(1).join(' ');
+              return p.firstname === csvFirstName && p.lastname.startsWith(csvLastName);
+            }
           );
-
+  
           if (playerData) {
             setPlayerDetails(playerData);
             localStorage.setItem(`player_${player.Name}`, JSON.stringify(playerData));
           }
-
+  
           setIsLoading(false);
         }
       } catch (error) {
@@ -40,7 +50,7 @@ const PlayerDetails = ({ player, onClose }) => {
         setIsLoading(false);
       }
     };
-
+  
     fetchPlayerDetails();
   }, [player]);
 
@@ -61,6 +71,14 @@ const PlayerDetails = ({ player, onClose }) => {
     );
   }
 
+  const handleLast10Games = () => {
+    navigate(`/players/${playerDetails.id}/last-10-games`);
+  };
+
+  const handleCurrentSeasonStats = () => {
+    navigate(`/players/${playerDetails.id}/current-season-stats`);
+  };
+
   return (
     <div className="player-details-overlay">
       <div className="player-details-container">
@@ -68,7 +86,7 @@ const PlayerDetails = ({ player, onClose }) => {
           &times;
         </button>
         <h2>{`${playerDetails.firstname} ${playerDetails.lastname}`}</h2>
-        <div className="player-info">
+        <div className="player-details-info">
           <div className="player-info-row">
             <div className="player-info-label">Date of Birth:</div>
             <div className="player-info-value">{playerDetails.birth.date}</div>
@@ -114,9 +132,13 @@ const PlayerDetails = ({ player, onClose }) => {
             <div className="player-info-value">{playerDetails.leagues.standard.pos}</div>
           </div>
         </div>
+        <div className="player-details-buttons">
+          <button onClick={handleLast10Games}>Last 10 Games</button>
+          <button onClick={handleCurrentSeasonStats}>Current Season Stats</button>
+        </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default PlayerDetails;
