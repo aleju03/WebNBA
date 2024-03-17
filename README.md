@@ -15,6 +15,7 @@ A web page that can display data from NBA using React as a framework and NBA.api
 get("https://v2.nba.api-sports.io/games?live=all"); (Extra optional)
 - [ ] Posibilidad de ver los últimos 10 partidos de un equipo (Obtener todos sus partidos por season=2023 del equipo y usar los ultimos 10 responses)
 - [x] En leaderboards, obtener los datos de get:"standings/"
+- [x] Add conference filter to Leaderboard
 parameters:
 league:"standard"
 season:"2023" y gg
