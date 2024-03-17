@@ -7,13 +7,12 @@ A web page that can display data from NBA using React as a framework and NBA.api
 ## TODO List
 - [x] See playerDetails
 - [x] Add "Force player search" to players ? and use fallback-image as their pfp **(Optional)**
-- [x] Button: Last 10 games on a playercard. (Not commited yet)
+- [x] Button: Last 10 games on a playercard.
 - [x] Button: Current season stats on a playercard.
-- [ ] ~~Agregar filtro por equipos a los jugadores~~ (Este es imposible con este API freemium así que mejor no xdd)
 - [ ] Equipos: Más o menos la misma lógica de diseño que los jugadores, obtener todos los equipos del api con el param: conference (east y west), guardarlo en cache para no hacer muchas calls  y acomodarlos todos con team card con imagen y nombre de equipo (como en players), al hacer click se muestran sus 10 partidas mas recientes??? o no se, al obtener los equipos con east y west se puede meter un filtro por conference facil
 - [ ] En leaderboards, obtener los datos de get:"standings/"
 parameters:
 league:"standard"
-season:"2023"
+season:"2023" y gg
 
 **NOTE:** El api cuenta season=2023 como la de season 2024 también lol y por eso season=2024 nunca retorna nada
