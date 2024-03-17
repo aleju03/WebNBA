@@ -9,8 +9,10 @@ import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import Games from './components/games/Games';
 import Players from './components/players/Players';
+import TeamSeasonStats from './components/teams/TeamSeasonStats';
 import Last10Games from './components/players/Last10Games';
 import CurrentSeasonStats from './components/players/CurrentSeasonStats';
+import Teams from './components/teams/Teams';
 
 const headers = {
   'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
@@ -49,7 +51,7 @@ const App = () => {
   };
 
   return (
-    <Router>
+<Router>
       <div className="app">
         {profile ? (
           <>
@@ -60,7 +62,8 @@ const App = () => {
               <Route path="/players/:playerId/last-10-games" element={<Last10Games />} />
               <Route path="/players/:playerId/current-season-stats" element={<CurrentSeasonStats />} />
               <Route path="/games" element={<Games API_URL={API_URL} headers={headers} />} />
-              <Route path="/teams" element={<h1>Teams</h1>} />
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/teams/:teamId/season-stats" element={<TeamSeasonStats />} />
               <Route path="/leaderboard" element={<h1>Leaderboard</h1>} />
             </Routes>
           </>

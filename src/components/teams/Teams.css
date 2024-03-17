@@ -1,0 +1,31 @@
+/* Teams.css */
+
+.teams-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .teams-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .conference-filter {
+    margin-bottom: 20px;
+  }
+  
+  .conference-filter label {
+    margin-right: 10px;
+  }
+  
+  .conference-filter select {
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  .team-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+  }

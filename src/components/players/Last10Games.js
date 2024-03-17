@@ -33,7 +33,8 @@ const Last10Games = () => {
           console.log('Player stats response:', statsResponse.data);
   
           if (statsResponse.data.response.length > 0) {
-            const last10GamesData = statsResponse.data.response.slice(0, 10);
+            const allGamesData = statsResponse.data.response;
+            const last10GamesData = allGamesData.slice(-10); // Retrieve the last 10 games
             const teamId = last10GamesData[0].team.id;
   
             const gamesUrl = `https://v2.nba.api-sports.io/games?team=${teamId}&season=${season}`;
