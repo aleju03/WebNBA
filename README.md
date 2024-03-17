@@ -6,7 +6,7 @@ A web page that can display data from NBA using React as a framework and NBA.api
 
 ## TODO List
 - [x] See playerDetails
-- [ ] Add "Force player search" to players ? and use fallback-image as their pfp **(Optional)**
+- [x] Add "Force player search" to players ? and use fallback-image as their pfp **(Optional)**
 - [x] Button: Last 10 games on a playercard. (Not commited yet)
 - [x] Button: Current season stats on a playercard.
 - [ ] ~~Agregar filtro por equipos a los jugadores~~ (Este es imposible con este API freemium así que mejor no xdd)
