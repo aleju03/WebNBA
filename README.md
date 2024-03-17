@@ -12,7 +12,7 @@ A web page that can display data from NBA using React as a framework and NBA.api
 - [x] Button: Current season stats on a playercard = Stats de la season actual de ese jugador ( o si es un jugador viejo, las últimas stats registradas)
 - [x] Equipos: Obtener todos los equipos del api con el param: conference (east y west), guardarlo en cache para no hacer muchas calls  y acomodarlos todos con team card con imagen y nombre de equipo (como en players), al hacer click se muestran estadísticas de la temporada actual
 - [x] Agregar filtro por conferencia en los equipos
-- [x] En leaderboards, obtener los datos de get:"standings/"
+- [x] Add leaderboards module for current season
 - [x] Add conference filter to Leaderboard
 ## TODO List
 - [ ] Fix Force Player search
