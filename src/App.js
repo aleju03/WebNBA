@@ -13,6 +13,7 @@ import TeamSeasonStats from './components/teams/TeamSeasonStats';
 import Last10Games from './components/players/Last10Games';
 import CurrentSeasonStats from './components/players/CurrentSeasonStats';
 import Teams from './components/teams/Teams';
+import Leaderboard from './components/standings/Leaderboard';
 
 const headers = {
   'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
@@ -64,7 +65,7 @@ const App = () => {
               <Route path="/games" element={<Games API_URL={API_URL} headers={headers} />} />
               <Route path="/teams" element={<Teams />} />
               <Route path="/teams/:teamId/season-stats" element={<TeamSeasonStats />} />
-              <Route path="/leaderboard" element={<h1>Leaderboard</h1>} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </>
         ) : (
