@@ -1,4 +1,3 @@
-// TeamSeasonStats.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -6,45 +5,58 @@ import './TeamSeasonStats.css';
 import LoadingSpinner from '../LoadingSpinner';
 
 const TeamSeasonStats = () => {
-    const { teamId } = useParams();
-    console.log('Team ID:', teamId);
-  
-    const [teamStats, setTeamStats] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-  
-    // Fetch team stats based on teamId
-    useEffect(() => {
-      const fetchTeamStats = async () => {
-        try {
-          const apiUrl = `https://v2.nba.api-sports.io/teams/statistics?id=${teamId}&season=2023`;
-          console.log('API URL:', apiUrl);
-  
-          const response = await axios.get(apiUrl, {
-            headers: {
-              'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
-              'x-rapidapi-host': 'v2.nba.api-sports.io',
-            },
-          });
-  
-          console.log('API Response:', response.data);
-  
-          if (response.data.response.length > 0) {
-            setTeamStats(response.data.response[0]);
-          } else {
-            setError('No stats found for the selected team.');
-          }
-  
-          setIsLoading(false);
-        } catch (error) {
-          console.error('Error fetching team stats:', error);
-          setError('An error occurred while fetching team stats.');
-          setIsLoading(false);
+  const { teamId } = useParams();
+  const [teamStats, setTeamStats] = useState(null);
+  const [team, setTeam] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTeamData = () => {
+      const cachedTeams = localStorage.getItem('cachedTeams');
+      if (cachedTeams) {
+        const teams = JSON.parse(cachedTeams);
+        const selectedTeam = teams.find((team) => team.id === parseInt(teamId));
+        if (selectedTeam) {
+          setTeam(selectedTeam);
         }
-      };
-  
-      fetchTeamStats();
-    }, [teamId]);
+      }
+    };
+
+    fetchTeamData();
+  }, [teamId]);
+
+  useEffect(() => {
+    const fetchTeamStats = async () => {
+      try {
+        const apiUrl = `https://v2.nba.api-sports.io/teams/statistics?id=${teamId}&season=2023`;
+        console.log('API URL:', apiUrl);
+
+        const response = await axios.get(apiUrl, {
+          headers: {
+            'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+            'x-rapidapi-host': 'v2.nba.api-sports.io',
+          },
+        });
+
+        console.log('API Response:', response.data);
+
+        if (response.data.response.length > 0) {
+          setTeamStats(response.data.response[0]);
+        } else {
+          setError('No stats found for the selected team.');
+        }
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching team stats:', error);
+        setError('An error occurred while fetching team stats.');
+        setIsLoading(false);
+      }
+    };
+
+    fetchTeamStats();
+  }, [teamId]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -55,7 +67,6 @@ const TeamSeasonStats = () => {
   }
 
   const {
-    team,
     games,
     points,
     fgm,
@@ -82,7 +93,10 @@ const TeamSeasonStats = () => {
     <div className="team-season-stats-container">
       {team && (
         <>
-          <h2 className="team-name">{team.name}'s Current Season Stats</h2>
+          <h2 className="team-name">
+            {team.name}
+            {team.name.endsWith('s') ? "'" : "'s"} Current Season Stats
+          </h2>
           <div className="team-info">
             <img src={team.logo} alt={team.name} className="team-logo" />
           </div>

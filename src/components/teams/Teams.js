@@ -70,8 +70,8 @@ const Teams = () => {
     ? teams
     : teams.filter((team) => team.conference === selectedConference);
 
-  const handleTeamClick = (team) => {
-    navigate(`/teams/${team.id}/season-stats`, { state: { teamName: team.name, teamLogo: team.logo } });
+  const handleTeamClick = (teamId) => {
+    navigate(`/teams/${teamId}/season-stats`);
   };
     
 
