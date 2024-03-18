@@ -17,5 +17,6 @@ A web page that can display data from NBA using React as a framework and NBA.api
 - [x] Add conference filter to Leaderboard
 - [x] Agregar "Live Games" en Games para que el usuario pueda ver si hay algún partido de NBA ocurriendo en el momento. // Get games in live
 get("https://v2.nba.api-sports.io/games?live=all"); (Extra optional)
+- [x] Posibilidad de ver los últimos 10 partidos de un equipo (Obtener todos sus partidos por season=2023 del equipo y usar los ultimos 10 responses)
 ## TODO List
-- [ ] Posibilidad de ver los últimos 10 partidos de un equipo (Obtener todos sus partidos por season=2023 del equipo y usar los ultimos 10 responses)
+gg
