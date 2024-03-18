@@ -2,7 +2,7 @@
 A web page that can display data from NBA using React as a framework and NBA.api as an api
 
 1. `npm install` to install dependencies
-2. `npm start`
+2. `npm start` to host the app
 
 
 ## Tasks list
