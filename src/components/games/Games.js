@@ -6,21 +6,21 @@ import axios from 'axios';
 import './Games.css';
 
 const SearchInput = ({ date, onDateChange, onSearch }) => {
-    return (
-      <div className="search-input">
-        <label htmlFor="date">Enter date:</label>
-        <div className="input-container">
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => onDateChange(e.target.value)}
-          />
-          <button onClick={onSearch}>Search</button>
-        </div>
+  return (
+    <div className="search-input">
+      <label htmlFor="date">Enter date:</label>
+      <div className="input-container">
+        <input
+          type="date"
+          id="date"
+          value={date}
+          onChange={(e) => onDateChange(e.target.value)}
+        />
+        <button onClick={onSearch}>Search</button>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 const GamesList = ({ games, onGameSelect }) => {
   return (
@@ -85,11 +85,52 @@ const GameDetails = ({ game }) => {
   );
 };
 
+const LiveGamesList = ({ games }) => {
+  return (
+    <div className="live-games-list">
+      {games.length > 0 ? (
+        <ul>
+          {games.map((game) => (
+            <li key={game.id}>
+              <div className="live-game-item">
+                <img src={game.teams.visitors.logo} alt={game.teams.visitors.name} />
+                <span>{game.teams.visitors.name}</span>
+                <span>{game.scores.visitors.points}</span>
+                <span>-</span>
+                <span>{game.scores.home.points}</span>
+                <span>{game.teams.home.name}</span>
+                <img src={game.teams.home.logo} alt={game.teams.home.name} />
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No live games at the moment.</p>
+      )}
+    </div>
+  );
+};
+
 const Games = ({ API_URL, headers }) => {
   const [date, setDate] = useState('');
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
   const [error, setError] = useState(null);
+  const [liveGames, setLiveGames] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchLiveGames = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get('https://v2.nba.api-sports.io/games?live=all', { headers });
+      const data = response.data;
+      setLiveGames(data.response);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  };
 
   const handleSearch = async () => {
     setError(null);
@@ -126,6 +167,23 @@ const Games = ({ API_URL, headers }) => {
       {error && <p className="error">{error}</p>}
       {games.length > 0 && <GamesList games={games} onGameSelect={handleGameSelect} />}
       {selectedGame && <GameDetails game={selectedGame} />}
+
+      <div className="live-games-container">
+        <div className="live-games-header">
+          <h2>
+            Live Games
+            <span className="live-indicator"></span>
+          </h2>
+          <button onClick={fetchLiveGames} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Get Live Games'}
+          </button>
+        </div>
+        {liveGames.length > 0 ? (
+          <LiveGamesList games={liveGames} />
+        ) : (
+          isLoading ? <p>Loading live games...</p> : null
+        )}
+      </div>
     </div>
   );
 };

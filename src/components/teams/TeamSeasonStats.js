@@ -1,15 +1,21 @@
+// TeamSeasonStats.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './TeamSeasonStats.css';
 import LoadingSpinner from '../LoadingSpinner';
 
 const TeamSeasonStats = () => {
   const { teamId } = useParams();
+  const navigate = useNavigate();
   const [teamStats, setTeamStats] = useState(null);
   const [team, setTeam] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleLast10GamesClick = () => {
+    navigate(`/teams/${teamId}/last-10-games`);
+  };
 
   useEffect(() => {
     const fetchTeamData = () => {
@@ -34,7 +40,7 @@ const TeamSeasonStats = () => {
 
         const response = await axios.get(apiUrl, {
           headers: {
-            'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+            'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY_ALT,
             'x-rapidapi-host': 'v2.nba.api-sports.io',
           },
         });
@@ -99,6 +105,9 @@ const TeamSeasonStats = () => {
           </h2>
           <div className="team-info">
             <img src={team.logo} alt={team.name} className="team-logo" />
+            <button className="last-10-games-button" onClick={handleLast10GamesClick}>
+              Last 10 Games
+            </button>
           </div>
         </>
       )}

@@ -1,0 +1,51 @@
+.last-10-games-container .game-cards .game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .last-10-games-container .game-cards .game-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .last-10-games-container .game-cards .team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .last-10-games-container .game-cards .team-info img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+  }
+  
+  .last-10-games-container .game-cards .score {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .last-10-games-container .game-cards .game-result {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .last-10-games-container .game-cards .win {
+    color: green;
+  }
+  
+  .last-10-games-container .game-cards .loss {
+    color: red;
+  }

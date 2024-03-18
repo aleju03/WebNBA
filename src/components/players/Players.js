@@ -32,6 +32,12 @@ const Players = () => {
     fetchPlayerData();
   }, []);
 
+  useEffect(() => {
+    if (!forceSearchEnabled) {
+      setDisplayedPlayers(allPlayers.slice(0, page * 20));
+    }
+  }, [forceSearchEnabled, allPlayers, page]);
+
   const handleForceSearch = async (event) => {
     event.preventDefault();
     if (forceSearchTerm.trim() !== '') {
@@ -40,19 +46,20 @@ const Players = () => {
         const apiUrl = `https://v2.nba.api-sports.io/players?name=${lastName}`;
         console.log('Force Search API URL:', apiUrl);
         console.log('API Key:', process.env.REACT_APP_RAPID_API_KEY);
-  
+
         const response = await axios.get(apiUrl, {
           headers: {
             'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
             'x-rapidapi-host': 'v2.nba.api-sports.io',
-          },      });
-  
+          },
+        });
+
         console.log('Force Search API Response:', response.data);
-  
+
         if (response.data.errors && response.data.errors.token) {
           throw new Error('API-KEY Error');
         }
-  
+
         const forcedPlayers = response.data.response
           .filter((player) => `${player.firstname} ${player.lastname}`.toLowerCase().includes(forceSearchTerm.toLowerCase()))
           .map((player) => ({
@@ -60,14 +67,16 @@ const Players = () => {
             Name: `${player.firstname} ${player.lastname}`,
             PFP: fallbackImage,
           }));
-  
-        setDisplayedPlayers([...displayedPlayers, ...forcedPlayers]);
+
+        setDisplayedPlayers(forcedPlayers);
       } catch (error) {
         console.error('Error fetching forced players:', error);
         if (error.message === 'API-KEY Error') {
           console.error('API-KEY Error: Missing or invalid application key.');
         }
       }
+    } else {
+      setDisplayedPlayers([]);
     }
   };
 
@@ -75,11 +84,12 @@ const Players = () => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
 
-    const filteredPlayers = allPlayers.filter((player) =>
-      player.Name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    setDisplayedPlayers(filteredPlayers.slice(0, page * 20));
+    if (!forceSearchEnabled) {
+      const filteredPlayers = allPlayers.filter((player) =>
+        player.Name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setDisplayedPlayers(filteredPlayers.slice(0, page * 20));
+    }
   };
 
   const handlePlayerClick = (player) => {
@@ -87,7 +97,6 @@ const Players = () => {
     const lastname = names[names.length - 1];
     setSelectedPlayer({ ...player, lastname });
   };
-  
 
   const handleClosePlayerDetails = () => {
     setSelectedPlayer(null);
@@ -95,7 +104,6 @@ const Players = () => {
 
   const loadMorePlayers = () => {
     setPage((prevPage) => prevPage + 1);
-    setDisplayedPlayers(allPlayers.slice(0, (page + 1) * 20));
   };
 
   return (
@@ -108,12 +116,17 @@ const Players = () => {
             placeholder="Search players..."
             value={searchTerm}
             onChange={handleSearch}
+            disabled={forceSearchEnabled}
           />
           <button
             className="force-search-toggle"
-            onClick={() => setForceSearchEnabled(!forceSearchEnabled)}
+            onClick={() => {
+              setForceSearchEnabled(!forceSearchEnabled);
+              setForceSearchTerm('');
+              setDisplayedPlayers(forceSearchEnabled ? allPlayers.slice(0, page * 20) : []);
+            }}
           >
-            {forceSearchEnabled ? 'Hide Force Search' : 'Show Force Search'}
+            {forceSearchEnabled ? 'Default Search Mode' : 'API Search Mode'}
           </button>
         </div>
         {forceSearchEnabled && (
@@ -144,7 +157,7 @@ const Players = () => {
           </div>
         ))}
       </div>
-      {allPlayers.length > displayedPlayers.length && (
+      {!forceSearchEnabled && allPlayers.length > displayedPlayers.length && (
         <button onClick={loadMorePlayers} className="load-more-button">
           Load More
         </button>

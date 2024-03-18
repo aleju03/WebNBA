@@ -24,17 +24,17 @@ const Teams = () => {
 
           console.log('API Call (East):', eastApiCall);
           console.log('API Call (West):', westApiCall);
-          console.log('API Key:', process.env.REACT_APP_RAPID_API_KEY);
+          console.log('API Key:', process.env.REACT_APP_RAPID_API_KEY_ALT);
 
           const eastResponse = await axios.get(eastApiCall, {
             headers: {
-              'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+              'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY_ALT,
               'x-rapidapi-host': 'v2.nba.api-sports.io',
             },
           });
           const westResponse = await axios.get(westApiCall, {
             headers: {
-              'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+              'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY_ALT,
               'x-rapidapi-host': 'v2.nba.api-sports.io',
             },
           });

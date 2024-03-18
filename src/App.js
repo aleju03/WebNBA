@@ -11,6 +11,7 @@ import Games from './components/games/Games';
 import Players from './components/players/Players';
 import TeamSeasonStats from './components/teams/TeamSeasonStats';
 import Last10Games from './components/players/Last10Games';
+import Last10TeamGames from './components/teams/Last10TeamGames';
 import CurrentSeasonStats from './components/players/CurrentSeasonStats';
 import Teams from './components/teams/Teams';
 import Leaderboard from './components/standings/Leaderboard';
@@ -65,6 +66,7 @@ const App = () => {
               <Route path="/games" element={<Games API_URL={API_URL} headers={headers} />} />
               <Route path="/teams" element={<Teams />} />
               <Route path="/teams/:teamId/season-stats" element={<TeamSeasonStats />} />
+              <Route path="/teams/:teamId/last-10-games" element={<Last10TeamGames />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </>
